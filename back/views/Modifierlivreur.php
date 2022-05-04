@@ -3,9 +3,9 @@ include "../core/livraisonC.php";
 include "../entities/livraison.php";
 $dbcon= config::getConnexion();
 
-$id = $_GET['id'] ;
+$id = $_GET['idL'] ;
 $etatLivraison = $_POST['etatLivraison'] ;
-$id = $_POST['id'] ;
+$id = $_POST['idL'] ;
 
 if($_POST['etatLivraison']=="livré")
 {

@@ -1,7 +1,7 @@
 <?php
 include "../core/livreurC.php";
 $lC=new livreurC();
-$t=$lC->supprimerlivreur($_GET['delid']);
+$t=$lC->supprimerlivreur($_GET['idL']);
 if ($t==1) {
 ?>
 <!DOCTYPE html>

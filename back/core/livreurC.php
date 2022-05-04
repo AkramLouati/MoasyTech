@@ -14,13 +14,13 @@ function afficherlivreur ($livreur){
 	    echo "adresse ".$livreur->getAdresse()."<br>";
 	    echo "mdp ".$livreur->getMdp()."<br>";
 	    echo "num_permis ".$livreur->getNum_permis()."<br>";
-        echo "id ".$livreur->getId_livreur()."<br>";
+        echo "idL ".$livreur->getId_livreur()."<br>";
 
 
 
 	}
 	function ajouterlivreur($livreur){
-		$sql="insert into livreur ( login,cin,nom,prenom,dispo,secteur,tel,date_naiss,mail,adresse,mdp,num_permis,id) values (:login,:cin, :nom,:prenom,:dispo,:secteur,:tel,:date_naiss,:mail,:adresse,:mdp,:num_permis,:id)";
+		$sql="insert into livreur ( login,cin,nom,prenom,dispo,secteur,tel,date_naiss,mail,adresse,mdp,num_permis,idL) values (:login,:cin, :nom,:prenom,:dispo,:secteur,:tel,:date_naiss,:mail,:adresse,:mdp,:num_permis,:idL)";
 		$db = config::getConnexion();
 		try{
         $req=$db->prepare($sql);
@@ -36,7 +36,7 @@ function afficherlivreur ($livreur){
         $adresse=$livreur->getAdresse();
         $mdp=$livreur->getMdp();
         $num_permis=$livreur->getNum_permis();
-        $id=$livreur->getId_livreur();
+        $idL=$livreur->getId_livreur();
 
 
 
@@ -55,7 +55,7 @@ function afficherlivreur ($livreur){
 		$req->bindValue(':adresse',$adresse);
 		$req->bindValue(':mdp',$mdp);
 		$req->bindValue(':num_permis',$num_permis);
-		$req->bindValue(':id',$id);
+		$req->bindValue(':idL',$idL);
 
 		
             $req->execute();
@@ -84,7 +84,7 @@ function afficherlivreur ($livreur){
 
 
 	function getAllLivreurS($keywords){
-		$sql="SELECT * FROM livreur WHERE CONCAT(`login`,`cin`, `nom`, `prenom`,`dispo`,`secteur`,`tel`,`date_naiss`,`mail`,`adresse`,`mdp`,`num_permis`,`id`) LIKE '%".$keywords."%'";
+		$sql="SELECT * FROM livreur WHERE CONCAT(`login`,`cin`, `nom`, `prenom`,`dispo`,`secteur`,`tel`,`date_naiss`,`mail`,`adresse`,`mdp`,`num_permis`,`idL`) LIKE '%".$keywords."%'";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -108,7 +108,7 @@ function afficherlivreur ($livreur){
         }	
 	}
 	function supprimerlivreur($cin){
-		$sql="DELETE FROM livreur where id= :id";
+		$sql="DELETE FROM livreur where idL= :idL";
 		$db = config::getConnexion();
         $req=$db->prepare($sql);
 		$req->bindValue(':cin',$cin);

@@ -284,8 +284,8 @@ foreach($listelivreurs as $row){
                 <td><?PHP echo $row['prenom']; ?></td>
                 <td><?PHP echo $row['dispo']; ?></td>
                  <td><?PHP echo $row['tel']; ?></td>
-                  <td><?PHP echo $row['datenaissance']; ?></td>
-                   <td><?PHP echo $row['Mail']; ?></td>
+                  <td><?PHP echo $row['date_naiss']; ?></td>
+                   <td><?PHP echo $row['mail']; ?></td>
                     <td><?PHP echo $row['secteur']; ?></td>
                 <td><form method="POST" action="supprimerlivreur.php">
 	<input type="submit" name="supprimer" value="supprimer">

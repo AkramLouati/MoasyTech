@@ -2,10 +2,10 @@
 include "../core/livraisonC.php";
 include "../entities/livraison.php";
 if ( isset($_POST['id']) and isset($_POST['etatLivraison']) and isset($_POST['lieuLivraison'])
-  and isset($_POST['prixLivraison']) and isset($_POST['modePaiement'])){
+  and isset($_POST['prixLivraison']) and isset($_POST['modePaiement']) and isset($_POST['idL'])){
 
   
-$pr=new livraison($_POST['id'],$_POST['etatLivraison'],$_POST['lieuLivraison'],$_POST['prixLivraison'],$_POST['modePaiement']);
+$pr=new livraison($_POST['id'],$_POST['etatLivraison'],$_POST['lieuLivraison'],$_POST['prixLivraison'],$_POST['modePaiement'],$_POST['idL']);
 
 var_dump($pr);
 $prC=new livraisonC();
@@ -57,6 +57,12 @@ else{
 	<div>
         <label for="modePaiement">Mode Paiement :</label>
         <input type="text" id="modePaiement" name="modePaiement">
+    </div>
+	<br><br>
+
+    <div>
+        <label for="idL">ID livreur :</label>
+        <input type="text" id="idL" name="idL">
     </div>
 	<br><br>
 	

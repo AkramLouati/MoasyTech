@@ -2,7 +2,8 @@
 include "../core/livreurC.php";
 include "../entities/livreur.php";
 if ( isset($_POST['login']) and isset($_POST['cin']) and isset($_POST['nom'])  and isset($_POST['prenom']) and isset($_POST['dispo']) and
- isset($_POST['secteur']) and isset($_POST['tel']) and isset($_POST['date_naiss']) and isset($_POST['mail']) and isset($_POST['adresse']) and isset($_POST['mdp']) and isset($_POST['num_permis']) and isset($_POST['idL'])){
+ isset($_POST['secteur']) and isset($_POST['tel']) and isset($_POST['date_naiss'])
+  and isset($_POST['mail']) and isset($_POST['adresse']) and isset($_POST['mdp']) and isset($_POST['num_permis']) and isset($_POST['idL'])){
 
   
 $pr=new livreur($_POST['login'],$_POST['cin'],$_POST['nom'],$_POST['prenom'],$_POST['dispo'],$_POST['secteur'],$_POST['tel'],$_POST['date_naiss'],$_POST['mail'],$_POST['adresse'],$_POST['mdp'],$_POST['num_permis'],$_POST['idL']);

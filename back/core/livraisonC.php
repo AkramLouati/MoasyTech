@@ -7,6 +7,7 @@ function afficherlivraison ($livraison){
 		echo "lieuLivraison: ".$livraison->getLieuLivraison()."<br>";
 		echo "prixLivraison: ".$livraison->getPrixLivraison()."<br>";
         echo "modePaiement: ".$livraison->getModePaiement()."<br>";
+		echo "idL: ".$livraison->getidL()."<br>";
 
 	}
 	function ajouterlivraison($livraison){
@@ -43,7 +44,7 @@ function afficherlivraison ($livraison){
 		
 	}
 	function getAllLivraisonS($keywords){
-		$sql="SELECT * FROM livraison WHERE CONCAT(`id`,  `etatLivraison`,`etatLivraison`, `lieuLivraison` ,`prixLivraison`,`modePaiement`) LIKE '%".$keywords."%'";
+		$sql="SELECT * FROM livraison WHERE CONCAT(`id`,  `etatLivraison`,`etatLivraison`, `lieuLivraison` ,`prixLivraison`,`modePaiement`,`idL`) LIKE '%".$keywords."%'";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -79,22 +80,23 @@ function afficherlivraison ($livraison){
         }
 	}
 	function modifierlivraison($livraison,$id){
-		$sql="UPDATE livraison SET id=:id, nom=:nom,adresse=:adresse,numtel=:numtel,numLivraison=:numLivraison WHERE id=:id";
+		$sql="UPDATE livraison SET id=:id, etatLivraison=:etatLivraison,lieuLivraison=:lieuLivraison,prixLivraison=:prixLivraison,modePaiement=:modePaiement,idL=:idL WHERE id=:id";
 		
 		$db = config::getConnexion();
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
 try{		
         $req=$db->prepare($sql);
-        $nom=$livraison->getnom();
-        $adresse=$livraison->getadresse();
-        $numtel=$livraison->getnumtel();
-		$numLivraison=$livraison->getnumLivraison();
-		$datas = array(':id'=>$id, ':id'=>$id, ':nom'=>$nom,':adresse'=>$adresse,':numtel'=>$numtel,':numLivraison'=>$numLivraison);
+        $etatLivraison=$livraison->getetatLivraison();
+        $lieuLivraison=$livraison->getlieuLivraison();
+        $prixLivraison=$livraison->getprixLivraison();
+		$modePaiement=$livraison->getmodePaiement();
+		$datas = array(':id'=>$id, ':id'=>$id, ':etatLivraison'=>$etatLivraison,':lieuLivraison'=>$lieuLivraison,':prixLivraison'=>$prixLivraison,':modePaiement'=>$modePaiement,':idL'=>$idL);
 		$req->bindValue(':id',$id);
-		$req->bindValue(':nom',$nom);
-		$req->bindValue(':adresse',$adresse);
-		$req->bindValue(':numtel',$numtel);	
-        $req->bindValue(':numLivraison',$numLivraison);			
+		$req->bindValue(':etatLivraison',$etatLivraison);
+		$req->bindValue(':lieuLivraison',$lieuLivraison);
+		$req->bindValue(':prixLivraison',$prixLivraison);	
+        $req->bindValue(':modePaiement',$modePaiement);	
+		$req->bindValue(':idL',$idL);			
 		
             $s=$req->execute();
 			
@@ -119,8 +121,8 @@ function recupererlivraison($id){
         }
 	}
 	
-	function rechercherListelivraisons($numtel){
-		$sql="SELECT * from livraison where numtel=$numtel";
+	function rechercherListelivraisons($id){
+		$sql="SELECT * from livraison where id=$id";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
