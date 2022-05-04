@@ -5,21 +5,34 @@ require ('db.php');
 
 ob_start();
 ?>
-<page backtop="20mm">
-	 <h1> Toutes les commandes </h1>
-		<table style="width:100%;border: 2px dashed " >
+<page backtop="5mm">
+
+        <div >
+           
+              
+                    
+                        <a class="navbar-brand"> <img src="images/glammm1.png" alt="logo" > </a>
+                 
+              
+            
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+
+	 <h1 style="color:rgb(253, 63, 146)"> Toutes les commandes </h1>
+	 <br><br><br>
+		<table style="width:400%;border: 2px dashed " >
 		<tr>
 
-														  <th scope="col">idcommande</th>
-													      <th scope="col">date</th>
-													      <th scope="col">montantCommande</th>
-													      <th scope="col">etatcom</th>
-													      <th scope="col">lieu</th>
-													      <th scope="col">prix</th>
+														  <th style="color:rgb(131, 41, 1481)" scope="col">idcommande</th>
+													      <th style="color:rgb(131, 41, 1481)" scope="col">date</th>
+													      <th  style="color:rgb(131, 41, 1481)" scope="col">montantCommande</th>
+													      <th style="color:rgb(131, 41, 1481)" scope="col">etatcom</th>
+													      <th style="color:rgb(131, 41, 1481)" scope="col">lieu</th>
+													      <th style="color:rgb(131, 41, 1481)" scope="col">prix</th>
 													  
 													      
 													    
-													      <th scope="col">action</th>
+													      <th style="color:rgb(131, 41, 1481)" scope="col">action</th>
 													</tr>
 													
 		<?php
