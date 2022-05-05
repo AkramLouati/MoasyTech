@@ -72,6 +72,35 @@ class user{
             }
         
         }
+        function triuserAsc()
+        {
+            $db = config::getConnexion();
+            $sql = "SELECT * FROM utilisateur ORDER BY username ASC";
+            
+            try{
+                return $db->query($sql);
+            }
+               catch (Exception $e)
+               {
+                   die('Erreur:'.$e->getMessage());
+               }
+        
+        }
+        function triuserdesc()
+        {
+            $db = config::getConnexion();
+            $sql = "SELECT * FROM utilisateur ORDER BY username DESC";
+            
+            try{
+                return $db->query($sql);
+            }
+               catch (Exception $e)
+               {
+                   die('Erreur:'.$e->getMessage());
+               }
+        
+        }
+    
           ///___ ____________________________ FONCTION find__________________________________
         
         // function find_utilisateur($q){  

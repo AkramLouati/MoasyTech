@@ -4,6 +4,15 @@ include './../../../controller/usercontroller.php';
 
 $empC=new user();
 $list = $empC->afficher();
+if (isset($_POST['tri']))
+    {
+        if($_POST['tri']=="triAsc")
+        {$list=$empC->triuserAsc();}
+        if($_POST['tri']=="triDes")
+        {$list=$empC->triuserdesc();}
+        if($_POST['tri']=="tri")
+        {$list=$empC->afficher();}
+    }
 
 ?>
 
@@ -267,7 +276,7 @@ $list = $empC->afficher();
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped">
+                      <table class="table table-striped" id="dataTable">
                         <thead>
                           <tr>
                           <th>id</th>
@@ -310,7 +319,40 @@ $list = $empC->afficher();
         <?php  
             }
         ?>
- 
+ <form action="" method="POST">
+    <select name="tri" id="tri">
+    <option value= tri>choissir une tri</option>
+        <option value="triAsc">alphabetasc</option>
+        <option value="triDes">alphabetdes</option>
+        <input type="submit" value="Trier">
+    </select>
+    <br>
+    <br>
+
+    <!--<input type="submit" value="">-->
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Recherche id" title="Type in a name">
+
+<script>
+    function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dataTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+</form>
 		 
    </tbody>
 

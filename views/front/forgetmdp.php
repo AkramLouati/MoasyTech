@@ -1,52 +1,8 @@
 <?php
 include 'C:\xampp\htdocs\user\controller\usercontroller.php';
 include 'C:\xampp\htdocs\user\model\user.php'; 
-include 'C:\xampp\htdocs\user\model\mdp.php';     
-include 'C:\xampp\htdocs\user\controller\resetmdpc.php';
-use PHPMailer\PHPMailer\PHPMailer;    
 ?>
-<?php
-if (isset($_post['submit'])) {
-    $user = new user();
-    $user->finduser('email');
-    foreach ($result as $row) {
-      $email = $row['email'];
-      $password = $row['mdp'];
-    }
-   
-    if(!empty($user))
-    {
-    $mailBody = $mdp;
-    
 
-
-
-    // Load Composer's autoloader
-
-
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    $mail->SMTPAuth = true;
-    $mail->SMTPSecure = 'ssl';
-
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = '465';
-    $mail->isHTML();
-    $mail->Username = 'mohamed.achi@esprit.tn';
-    $mail->Password = '201JMT1852';
-
-    $mail->setFrom('no-reply@gmail.com');
-    $mail->Subject = 'votre mot de passe';
-    $mail->Body = $mailBody;
-    $mail->addAddress($email);
-    $mail->send();
-    echo 'envoyer';
-    }
-    else 
-    echo 'error email';
-}
-
-?>
 <!doctype html>
 <html lang="zxx">
 
@@ -192,22 +148,79 @@ if (isset($_post['submit'])) {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="login_part_form">
-                        <div class="login_part_form_iner">
-                            <h3>mot de passe oublié ? <br> aucune problem  !<h3>
-                               <h4> email de verification :</h4 >
-                            <form class="row contact_form"  method="post" >
+                
+                <form class="row contact_form" action="" method="post" >
+                               
                                 <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" name="email"
-                                       value="email" placeholder="email">
+                                    <input type="text" class="form-control" id="use" name="use" 
+                                        placeholder="use">
                                 </div>
+                                
                                 <div class="col-md-12 form-group">
                                   
-                                    <button type="submit" value="submit" name="submit" class="btn_3">
-envoyer                                   </button>
+                                    <button type="submit" value="submit"  name="submit" class="btn_3">verifier </button>
+                                    <?php
+
+if (isset($_POST['submit'])) {
+    $input= trim($_POST['use']);
+    $user = new user();
+    $error='';
+    $list = $user->afficher();
+    foreach ($list as $user){
+        
+        if(strcmp( $input,$user['username'])==0){
+            $error='good';
+?>  <!-- <form class="row contact_form" action="" method="post">
+                               
+<div class="col-md-12 form-group p_star">
+    <input type="text" class="form-control"value=ade id="ade" name="ade" 
+        placeholder="adresse">
+</div>
+
+<div class="col-md-12 form-group">
+  
+    <button type="submit"  name="turn" class="btn_3">OBTENIR VOTRE MOT DE PASSE </button>
+        </div>  
+        </form>-->
+        <form action="" method="post">
+        <div class="col-md-12 form-group p_star">
+                            <label>adresse</label>
+                            <input name="ade" class="form-control"></textarea>
+                           
+                        </div>
+                        <button  value="turn" name="turn" class="btn_3">obtenir  votre mot de passe </button>
+                        </form>
+<?php
+if(isset($_POST['turn'])) {
+    $inputad= trim($_POST['ade']);
+    if(strcmp($inputad,$user['adresse'])==0)
+    {
+        $error='good';
+?><h1>votre mot de passe est :<?php echo $user['mdp'];?></h1>
+    <?php
+    }
+    else{
+        $error='bad';
+
+    }
+}
+        }
+        
+    }
+    if((strcmp('bad',$error)==0)||(strcmp('good',$error)!=0)){ 
+        ?><h1 style="color:red">erro check </h1><?php
+      }  
+}
+?>
                                 </div>
+  
+  
+                                </li>
+                                 
                             </form>
+                              
+
+                               
                             
                         </div>
                     </div>
