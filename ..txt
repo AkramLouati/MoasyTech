@@ -1,0 +1,28 @@
+/*   http://localhost/AtelierC   */
+/*   http://localhost/saboouna   */
+
+/* promotion */
+Id
+Nom
+DateD
+DateF
+PrixA
+Remise
+PrixN
+Img
+
+set @autoid :=0; 
+update promotion set id = @autoid := (@autoid+1);
+alter table promotion Auto_Increment = 1;
+
+/* reclamation */
+Id
+Nom
+Prenom
+TexteR
+Email
+DateR
+
+set @autoid :=0;
+update reclamation set id = @autoid := (@autoid+1);
+alter table reclamation Auto_Increment = 1;
