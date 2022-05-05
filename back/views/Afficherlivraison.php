@@ -14,16 +14,6 @@
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body>
-
-  <?PHP
-        include "../core/livraisonC.php";
-        $livraison1C=new livraisonC();
-        $listelivraisons=$livraison1C->afficherlivraisons();
-        
-        //var_dump($listelivraisons->fetchAll());
-        ?>
-
-        
     <div class="container-scroller">
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
@@ -119,7 +109,7 @@
             <div class="tiles dark"></div>
           </div>
         </div>
-        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
+        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-livraison">
           <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
             <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
             <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
@@ -172,23 +162,23 @@
                 <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="messageDropdown">
                   <h6 class="p-3 mb-0">Messages</h6>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-grow">
+                    <div class="preview-item-content flex-glivraison">
                       <span class="badge badge-pill badge-success">Request</span>
                       <p class="text-small text-muted ellipsis mb-0"> Suport needed for user123 </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-grow">
+                    <div class="preview-item-content flex-glivraison">
                       <span class="badge badge-pill badge-warning">Invoices</span>
                       <p class="text-small text-muted ellipsis mb-0"> Invoice for order is mailed </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-grow">
+                    <div class="preview-item-content flex-glivraison">
                       <span class="badge badge-pill badge-danger">Projects</span>
-                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorrow </p>
+                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorlivraison </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
@@ -251,48 +241,51 @@
             </div>
             <div class="content-wrapper">
            
-            <div class="row">
+            <div class="livraison">
           
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Id livraison</th>
-                            <th>Etat livraison</th>
-                            <th>Lieu livraison</th>
-                            <th>Prix livraison</th>
-                            <th>Mode Paiement</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="py-1">12
-                            </td>
-                            <td>avenue habib bourgiba</td>
-                            <td>
-                            22/02/2021
-                            </td>
-                            <td>2</td>
-                          </tr>
-                          <tr>
-                          <td><?php echo $livraison['id']; ?></td>
-                          <td><?php echo $livraison['etatLivraison']; ?></td>
-                          <td><?php echo $livraison['lieuLivraison']; ?></td>
-                          <td><?php echo $livraison['prixLivraison']; ?></td>
-                          <td><?php echo $livraison['modePaiement']; ?></td>
-                          <td>
-                            <form method="POST" action="Modifierlivraison.php">
-                              <input type="submit" name="Modifier" value="Modifier">
-                              <input type="hidden" value=<?PHP echo $livraison['id']; ?> name="id">
-                            </form>
-                          </td>
-                          <td>
-                            <a href="Supprimerlivraison.php?id=<?php echo $livraison['id']; ?>">Supprimer</a>
-                          </td>
-                          </tr>
+                      <thead>
+            <tr>
+                <th>Id livraison</th>
+                <th>Etat livraison</th>
+                <th>Lieu livraison</th>
+                <th>Prix livraison</th>
+                <th>Mode Paiement</th>
+                <th>Id livreur</th>
+            </tr>
+        </thead>
+        <?PHP
+foreach($listelivraisons as $livraison){
+	?>
+        <tbody>
+           
+            <tr>
+                <td><?PHP echo $livraison['id']; ?></td>
+                <td><?PHP echo $livraison['etatLivraison']; ?></td>
+                <td><?PHP echo $livraison['lieuLivraison']; ?></td>
+                <td><?PHP echo $livraison['prixLivraison']; ?></td>
+                 <td><?PHP echo $livraison['modePaiement']; ?></td>
+                  <td><?PHP echo $livraison['idL']; ?></td>
+                <td><form method="POST" action="supprimerlivraison.php">
+	<input type="submit" name="supprimer" value="supprimer">
+	<input type="hidden" value="<?PHP echo $livraison['id']; ?>" name="id">
+	</form>
+	</td>
+	<td><a href="modifierlivraison.php?id=<?PHP echo $livraison['id']; ?>">
+	Modifier</a></td>
+            </tr>
+           
+        </tbody>
+        <?PHP
+    }
+    ?>
+    </table>
+</div>
+</div>
                           <tr>
                             <td class="py-1">
                             </td>

@@ -13,10 +13,24 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
-
-
-
   <body>
+
+
+
+  <?PHP
+        include "../core/livraisonC.php";
+        $livraison1C=new livraisonC();
+        $listelivraisons=$livraison1C->afficherlivraisons();
+        
+        //var_dump($listelivraisons->fetchAll());
+        ?>
+
+  <button >
+                                            <a href="trieP.php"></a> </button> 
+                                              
+                                          </td>
+
+
     <div class="container-scroller">
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
