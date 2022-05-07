@@ -109,7 +109,7 @@
             <div class="tiles dark"></div>
           </div>
         </div>
-        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-livraison">
+        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
           <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
             <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
             <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
@@ -162,23 +162,23 @@
                 <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="messageDropdown">
                   <h6 class="p-3 mb-0">Messages</h6>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-success">Request</span>
                       <p class="text-small text-muted ellipsis mb-0"> Suport needed for user123 </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-warning">Invoices</span>
                       <p class="text-small text-muted ellipsis mb-0"> Invoice for order is mailed </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-danger">Projects</span>
-                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorlivraison </p>
+                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorrow </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
@@ -241,41 +241,54 @@
             </div>
             <div class="content-wrapper">
            
-            <div class="livraison">
+            <div class="row">
           
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                      <thead>
+                  <?PHP
+        include "../core/livraisonC.php";
+        $livraison1C=new livraisonC();
+        $listelivraisons=$livraison1C->afficherlivraisons();
+        
+        //var_dump($listelivraisons->fetchAll());
+        ?>
+		<div class="col-md-6">
+    <div class="panel panel-default">
+		 <div class="panel-heading">
+       Les livraisons disponibles
+    </div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
             <tr>
-                <th>Id livraison</th>
+                <th>id</th>
                 <th>Etat livraison</th>
                 <th>Lieu livraison</th>
                 <th>Prix livraison</th>
-                <th>Mode Paiement</th>
-                <th>Id livreur</th>
+                <th>Mode paiement</th>
+                <th>id livreur</th>
             </tr>
         </thead>
         <?PHP
-foreach($listelivraisons as $livraison){
+foreach($listelivraisons as $row){
 	?>
         <tbody>
            
             <tr>
-                <td><?PHP echo $livraison['id']; ?></td>
-                <td><?PHP echo $livraison['etatLivraison']; ?></td>
-                <td><?PHP echo $livraison['lieuLivraison']; ?></td>
-                <td><?PHP echo $livraison['prixLivraison']; ?></td>
-                 <td><?PHP echo $livraison['modePaiement']; ?></td>
-                  <td><?PHP echo $livraison['idL']; ?></td>
+                <td><?PHP echo $row['id']; ?></td>
+                <td><?PHP echo $row['etatLivraison']; ?></td>
+                <td><?PHP echo $row['lieuLivraison']; ?></td>
+                <td><?PHP echo $row['prixLivraison']; ?></td>
+                 <td><?PHP echo $row['modePaiement']; ?></td>
+                  <td><?PHP echo $row['idL']; ?></td>
+
                 <td><form method="POST" action="supprimerlivraison.php">
 	<input type="submit" name="supprimer" value="supprimer">
-	<input type="hidden" value="<?PHP echo $livraison['id']; ?>" name="id">
+	<input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
 	</form>
 	</td>
-	<td><a href="modifierlivraison.php?id=<?PHP echo $livraison['id']; ?>">
+	<td><a href="modifierlivraison.php?id=<?PHP echo $row['id']; ?>">
 	Modifier</a></td>
             </tr>
            
