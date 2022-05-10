@@ -107,11 +107,11 @@ function afficherlivreur ($livreur){
             die('Erreur: '.$e->getMessage());
         }	
 	}
-	function supprimerlivreur($cin){
+	function supprimerlivreur($idL){
 		$sql="DELETE FROM livreur where idL= :idL";
 		$db = config::getConnexion();
         $req=$db->prepare($sql);
-		$req->bindValue(':cin',$cin);
+		$req->bindValue(':idL',$idL);
 		try{
             $req->execute();
            // header('Location: index.php');

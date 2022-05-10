@@ -1,9 +1,51 @@
 <?php
        include "../core/livraisonC.php";
        include "../entities/livraison.php";
-        $id =$_GET['id'] ;
-        $pC=new livraisonC();
-        $listelivraison =$pC->recupererlivraison($id);
+       $error = "";
+
+
+
+
+
+       $livraison = null;
+       
+       
+       $livraisonC = new livraisonC();
+       
+
+
+if (
+	isset($_POST['id']) 
+	&& isset($_POST['etatLivraison']) 
+	&& isset($_POST['lieuLivraison']) 
+	&& isset($_POST['prixLivraison'])
+	 && isset($_POST['modePaiement'])
+	 && isset($_POST['idL'])
+
+){
+	if (
+		!empty($_POST['id']) &&
+		!empty($_POST['etatLivraison']) &&
+		!empty($_POST['lieuLivraison']) &&
+		!empty($_POST['prixLivraison']) &&
+		!empty($_POST['modePaiement']) &&
+		!empty($_POST['nidL'])
+	) {
+		$livraison = new livraison(
+			$_POST['id'],
+			$_POST['etatLivraison'], 
+			$_POST['lieuLivraison'],
+			$_POST['prixLivraison'],
+			$_POST['modePaiement'],
+			$_POST['idL']
+		);
+		
+		$livraisonC->modifierlivraison($livraison, $_GET['idL']);
+		header('Location:Afficherlivraison.php');
+	}
+	else
+		$error = "Missing information";
+}
       ?>
 
 
@@ -47,41 +89,41 @@
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="gestiondesclients.html">
+            <a class="nav-link" href="gestion des clients.html">
               <i class="mdi mdi-account-multiple
  menu-icon"></i>
               <span class="menu-title">Gestion des clients</span>
             </a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="gestiondesproduits.html">
+            <a class="nav-link" href="afficherproduit.php">
               <i class="mdi mdi-shopping
  menu-icon"></i>
               <span class="menu-title">Gestion des produits</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gestiondescommandes.html">
+            <a class="nav-link" href="gestion des commandes.html">
               <i class="mdi mdi-tag-outline
  menu-icon"></i>
               <span class="menu-title">Gestion des commandes</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gestiondeslivraisons.html">
+            <a class="nav-link" href="gestion des livraisons.html">
               <i class="mdi mdi-truck-delivery menu-icon"></i>
               <span class="menu-title">Gestion des livraisons</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gestiondesevenements.html">
+            <a class="nav-link" href="gestion des evenements.html">
               <i class="mdi mdi-calendar-text
  menu-icon"></i>
-              <span class="menu-title">Gestion des promotions</span>
+              <span class="menu-title">Gestion des promortions</span>
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="gestiondesreclamations.html">
+            <a class="nav-link" href="gestion des reclamations.html">
               <i class="mdi mdi-thumb-down
  menu-icon"></i>
               <span class="menu-title">Gestion des réclamations</span>
@@ -238,7 +280,7 @@
         <div class="main-panel">
           <div class="content-wrapper pb-0">
             <div class="page-header flex-wrap">
-              <h3 class="mb-0"> Gestion des livraisons <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block"></span>
+              <h3 class="mb-0"> Gestion des produits <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block"></span>
               </h3>
               <div class="d-flex">
                 <button type="button" class="btn btn-sm bg-white btn-icon-text border">
@@ -259,88 +301,45 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>Id livraison</th>
-                            <th>Etat de livraison</th>
-                            <th>Lieu de livraison</th>
-                            <th>Prix de livraison</th>
-                            <th>Mode de paiement</th>
+                            
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td class="py-1">12
-                            </td>
-                            <td>livrée</td>
-                            <td>avenue habib bourgiba</td>
-                            <td>
-                            200TTC
-                            </td>
-                            <td>espece</td>
-                          </tr>
-                          <tr>
-                                           <td><?php echo $row['prixLivraison'];?> </td>
-                                                 <td><?php echo $row['etatLivraison'];?></td>
-                                                  <td><?php echo $row['lieuLivraison'];?></td>
-                                                   <td><?php echo $row['modePaiement'];?></td>
-                          <td>
-                            <form method="POST" action="Modifierlivraison.php">
-                              <input type="submit" name="Modifier" value="Modifier">
-                              <input type="hidden" value=<?PHP echo $livraison['id']; ?> name="id">
+                        <form action="" method="POST">
+						<div>
+        <label for="id">Id:</label>
+        <input type="text" id="id" name="id">
+    </div>
+
+    <div>
+        <label for="etatLivraison">Etat Livraison :</label>
+        <input type="text" id="etatLivraison" name="etatLivraison">
+    </div>
+
+	<div>
+        <label for="lieuLivraison">Lieu Livraison :</label>
+        <input type="text" id="lieuLivraison" name="lieuLivraison">
+    </div>
+
+	<div>
+        <label for="prixLivraison">Prix Livraison :</label>
+        <input type="text" id="prixLivraison" name="prixLivraison">
+    </div>
+
+	<div>
+        <label for="modePaiement">Mode Paiement:</label>
+        <input type="text" id="modePaiement" name="modePaiement">
+    </div>
+
+	<div>
+        <label for="idL">Id Livreur :</label>
+        <input type="text" id="idL" name="idL">
+    </div>
+
+
+                                <input type="submit" class="btn" value="Envoyer">
+                                <input type="reset" class="btn" value="Annuler">
                             </form>
-                          </td>
-                          <td>
-                            <a href="Supprimerlivraison.php?id=<?php echo $livraison['id']; ?>">Supprimer</a>
-                          </td>
-                          </tr>
-                          <tr>
-                            <td class="py-1">
-                            </td>
-                            <td></td>
-                            <td>
-                             
-                            </td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td class="py-1">
-                            </td>
-                            <td></td>
-                            <td>
-                             </td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td class="py-1">
-                            </td>
-                            <td></td>
-                            <td>
-                             
-                            </td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td class="py-1">
-                            </td>
-                            <td></td>
-                            <td>
-                             
-                            </td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td class="py-1">
-                            </td>
-                            <td></td>
-                            <td>
-                              
-                            </td>
-                            <td></td>
-                            <td></td>
-                          </tr>
                         </tbody>
                       </table>
                     </div>
