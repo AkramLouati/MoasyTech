@@ -131,10 +131,10 @@ $con = mysqli_connect("localhost", "root", "", "crud");
     </div>
   </header>
   <style>
-        body {
-            background-color: white;
-        }
-    </style>
+    body {
+      background-color: white;
+    }
+  </style>
   <center>
     <div id="piechart" style="width: 1000px; height: 460px;"></div>
   </center>

@@ -334,7 +334,7 @@ if (
                                                                         <?php
                                                                         foreach ($listec as $Produit) {
                                                                         ?>
-                                                                            <option><?php echo $Produit['Nom']; ?> <?php } ?></option>
+                                                                            <option><?php echo $Produit['libelle']; ?> <?php } ?></option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="input-group mb-3">

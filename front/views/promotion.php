@@ -8,7 +8,7 @@ $listePromotions = $PromotionC->afficherPromotion();
 
 $date = date('Y-m-d');
 $page = $_SERVER['PHP_SELF'];
-$sec = "15";
+$sec = "10";
 ?>
 <!doctype html>
 <html lang="en">
@@ -215,6 +215,7 @@ $sec = "15";
                     <div class="checkout_btn_inner float-right">
                         <a class="btn_1" target="_blank" rel="noopener noreferrer" href="chartP.php">Statistique</a>
                         <a class="btn_1 checkout_btn_1" target="_blank" rel="noopener noreferrer" href="pdfP.php">PDF</a>
+                        <a class="btn_1 checkout_btn_1" target="_blank" href="excel.php">Excel</a>
                     </div>
                 </div>
             </div>

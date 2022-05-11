@@ -1,10 +1,23 @@
 <?Php
-require "config-pdo.php"; // Database connection
+$host_name = "localhost";
+$database = "crud"; // Change your database nae
+$username = "root";          // Your database user id
+$password = "";          // Your password
+
+//////// Do not Edit below /////////
+try {
+    $dbo = new PDO('mysql:host=' . $host_name . ';dbname=' . $database, $username, $password);
+} catch (PDOException $e) {
+    print "<br>Error!: " . $e->getMessage() . "<br/>";
+    echo "<br><br><font color=red>
+Check MySQL login details inside <b>config.php</b> file</font>";
+    die();
+}
+
 $query = "SELECT Id, Nom, Prenom, TexteR, Email, DateR, Validee FROM reclamation";
 $step = $dbo->prepare($query);
 if ($step->execute()) {
     $php_data_array = $step->fetchAll();
-    //print_r($php_data_array);
     echo "<script>
         var my_2d=" . json_encode($php_data_array) . "
         </script>";
