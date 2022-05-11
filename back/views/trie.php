@@ -14,23 +14,6 @@
     <link rel="shortcut icon" href="assets/images/favicon.png" />
   </head>
   <body>
-
-
-
-  <?PHP
-        include "../core/livraisonC.php";
-        $livraison1C=new livraisonC();
-        $listelivraisons=$livraison1C->afficherlivraisons();
-        
-        //var_dump($listelivraisons->fetchAll());
-        ?>
-
-  <button >
-                                            <a href="trieP.php"></a> </button> 
-                                              
-                                          </td>
-
-
     <div class="container-scroller">
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
@@ -62,10 +45,10 @@
             </a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="gestiondesproduits.html">
+            <a class="nav-link" href="gestiondeslivraisons.html">
               <i class="mdi mdi-shopping
  menu-icon"></i>
-              <span class="menu-title">Gestion des produits</span>
+              <span class="menu-title">Gestion des livraisons</span>
             </a>
           </li>
           <li class="nav-item">
@@ -126,7 +109,7 @@
             <div class="tiles dark"></div>
           </div>
         </div>
-        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-livraison">
+        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
           <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
             <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
             <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
@@ -179,23 +162,23 @@
                 <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="messageDropdown">
                   <h6 class="p-3 mb-0">Messages</h6>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-success">Request</span>
                       <p class="text-small text-muted ellipsis mb-0"> Suport needed for user123 </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-warning">Invoices</span>
                       <p class="text-small text-muted ellipsis mb-0"> Invoice for order is mailed </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
                   <a class="dropdown-item preview-item">
-                    <div class="preview-item-content flex-glivraison">
+                    <div class="preview-item-content flex-grow">
                       <span class="badge badge-pill badge-danger">Projects</span>
-                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorlivraison </p>
+                      <p class="text-small text-muted ellipsis mb-0"> New project will start tomorrow </p>
                     </div>
                     <p class="text-small text-muted align-self-start"> 4:10 PM </p>
                   </a>
@@ -258,48 +241,79 @@
             </div>
             <div class="content-wrapper">
            
-            <div class="livraison">
+            <div class="row">
           
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Id livraison</th>
-                            <th>Etat de livraison</th>
-                            <th>Lieu de livraison</th>
-                            <th>Prix de livraison</th>
-                            <th>Mode de paiement</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="py-1">12
-                            </td>
-                            <td>livrée</td>
-                            <td>avenue habib bourgiba</td>
-                            <td>
-                            200TTC
-                            </td>
-                            <td>espece</td>
-                          </tr>
-                          <tr>
-                                           <td><?php echo $livraison['prixLivraison'];?> </td>
-                                                 <td><?php echo $livraison['etatLivraison'];?></td>
-                                                  <td><?php echo $livraison['lieuLivraison'];?></td>
-                                                   <td><?php echo $livraison['modePaiement'];?></td>
-                          <td>
-                            <form method="POST" action="Modifierlivraison.php">
-                              <input type="submit" name="Modifier" value="Modifier">
-                              <input type="hidden" value=<?PHP echo $livraison['id']; ?> name="id">
-                            </form>
-                          </td>
-                          <td>
-                            <a href="Supprimerlivraison.php?id=<?php echo $livraison['id']; ?>">Supprimer</a>
-                          </td>
-                          </tr>
+                  <?PHP
+                include "../core/livraisonC.php";
+                $livraison1C=new livraisonC();
+                $listelivraisons=$livraison1C->trie();
+                ?>
+
+
+<td>
+
+
+
+
+
+<table class="table table-bordered table-striped mb-none"  id="myTable2" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
+                            <thead>
+                                <tr>
+                                        <th onclick="sortTable(0)">identifiant du livraison </th>
+                                        <th onclick="sortTable(1)">etat livraison</th>
+                                        <th onclick="sortTable(3)">lieu livraison</th>
+                                        <th onclick="sortTable(4)">prix livraison</th>
+                                        <th onclick="sortTable(4)">mode paiement</th>
+                                        <th onclick="sortTable(4)">identifiant du livreur</th>
+                                    
+                                        </tr>
+
+
+</thead>
+<?PHP
+foreach($listelivraisons as $row){
+?>
+    <tbody>
+    <tr class="gradeX">
+
+    <td ><?PHP echo $row['id']; ?></td>
+    <td><?PHP echo $row['etatLivraison']; ?></td>
+    <td><?PHP echo $row['lieuLivraison']; ?></td>
+    <td><?PHP echo $row['prixLivraison']; ?></td>
+    <td><?PHP echo $row['modePaiement']; ?></td>
+    <td><?PHP echo $row['idL']; ?></td>
+
+     
+    <td>
+
+<form method="POST" action="Modifierlivraison.php">
+                        <input type="submit" name="Modifier" value="Modifier">
+                        <input type="hidden" value=<?PHP echo $row['id']; ?> name="id">
+                    </form>
+                </td>
+                <td>
+                    <a href="Supprimerlivraison.php?id=<?php echo $row['id']; ?>">Supprimer</a>
+                </td>
+
+                
+                 
+                 
+                </td>
+
+
+    
+<?PHP
+}
+?>
+
+
+
+    </table>
+</div>
+</div>
                           <tr>
                             <td class="py-1">
                             </td>

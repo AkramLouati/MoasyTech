@@ -1,6 +1,6 @@
 <?php
 include "../core/livraisonC.php";
-
+require ('db.php');
 
 
 ob_start();
@@ -19,12 +19,12 @@ ob_start();
 													  
 													      
 													    
-													      <th scope="col">action</th>
+													     
 													</tr>
 													
 		<?php
-$livraison=new livraisonC();
-$liste=$livraison->recupererlivraison($id);
+$livraisonC=new livraisonC();
+$liste=$livraisonC->recupererlivraisons();
 		foreach($liste as $row) {
 			?>
 		  <tr>

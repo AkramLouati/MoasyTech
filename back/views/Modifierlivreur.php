@@ -360,12 +360,12 @@ if (
 
 	<div>
         <label for="date_naiss">Date de naissance :</label>
-        <input type="date" id="prenom" name="prenom">
+        <input type="date" id="date_naiss" name="date_naiss">
     </div>
 
 	<div>
-        <label for="prenom">Mail :</label>
-        <input type="text" id="prenom" name="prenom">
+        <label for="mail">Mail :</label>
+        <input type="text" id="mail" name="mail">
     </div>
 
 	<div>
@@ -383,7 +383,7 @@ if (
         <input type="text" id="num_permis" name="num_permis">
     </div>
 	
-                                <input type="submit" class="btn" value="Envoyer">
+                                <input type="submit" class="btn" value="Modifier">
                                 <input type="reset" class="btn" value="Annuler">
                             </form>
                         </tbody>

@@ -1,7 +1,7 @@
 <?php
-	include '../../core/livraisonC.php';
+	include '../core/livraisonC.php';
     
 	$livraisonC=new livraisonC();
-	$livraisonC->supprimerlivraison($id);
+	$livraisonC->supprimerlivraison($_GET["id"]);
 	header('Location:Afficherlivraison.php');
 ?>

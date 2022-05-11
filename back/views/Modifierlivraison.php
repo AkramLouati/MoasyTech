@@ -2,14 +2,7 @@
        include "../core/livraisonC.php";
        include "../entities/livraison.php";
        $error = "";
-
-
-
-
-
        $livraison = null;
-       
-       
        $livraisonC = new livraisonC();
        
 
@@ -29,7 +22,7 @@ if (
 		!empty($_POST['lieuLivraison']) &&
 		!empty($_POST['prixLivraison']) &&
 		!empty($_POST['modePaiement']) &&
-		!empty($_POST['nidL'])
+		!empty($_POST['idL'])
 	) {
 		$livraison = new livraison(
 			$_POST['id'],
@@ -40,7 +33,7 @@ if (
 			$_POST['idL']
 		);
 		
-		$livraisonC->modifierlivraison($livraison, $_GET['idL']);
+		$livraisonC->modifierlivraison($livraison, $_POST['id']);
 		header('Location:Afficherlivraison.php');
 	}
 	else
@@ -280,7 +273,7 @@ if (
         <div class="main-panel">
           <div class="content-wrapper pb-0">
             <div class="page-header flex-wrap">
-              <h3 class="mb-0"> Gestion des produits <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block"></span>
+              <h3 class="mb-0"> Gestion des livraisons <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block"></span>
               </h3>
               <div class="d-flex">
                 <button type="button" class="btn btn-sm bg-white btn-icon-text border">
@@ -301,14 +294,15 @@ if (
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            
+
                           </tr>
                         </thead>
                         <tbody>
+                          
                         <form action="" method="POST">
 						<div>
         <label for="id">Id:</label>
-        <input type="text" id="id" name="id">
+        <input type="number" id="id" name="id">
     </div>
 
     <div>
@@ -317,27 +311,28 @@ if (
     </div>
 
 	<div>
-        <label for="lieuLivraison">Lieu Livraison :</label>
+        <label for="lieuLivraison">Lieu livraison :</label>
         <input type="text" id="lieuLivraison" name="lieuLivraison">
     </div>
 
 	<div>
         <label for="prixLivraison">Prix Livraison :</label>
-        <input type="text" id="prixLivraison" name="prixLivraison">
+        <input type="number" id="prixLivraison" name="prixLivraison">
     </div>
 
 	<div>
-        <label for="modePaiement">Mode Paiement:</label>
+        <label for="modePaiement">Mode Paiement :</label>
         <input type="text" id="modePaiement" name="modePaiement">
     </div>
 
 	<div>
         <label for="idL">Id Livreur :</label>
-        <input type="text" id="idL" name="idL">
+        <input type="number" id="idL" name="idL">
     </div>
 
 
-                                <input type="submit" class="btn" value="Envoyer">
+	
+                                <input type="submit" class="btn" value="Modifier">
                                 <input type="reset" class="btn" value="Annuler">
                             </form>
                         </tbody>

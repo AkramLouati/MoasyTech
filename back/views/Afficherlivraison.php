@@ -256,6 +256,49 @@
 		<div class="col-md-6">
     <div class="panel panel-default">
 		 <div class="panel-heading">
+
+
+     <td>
+                                    <button>
+                                        <a href="trie.php" class="btn">trier</a> </button>
+
+                                </td>
+      
+     <td>
+                                    <button>
+                                        <a href="pdf.php" class="btn">PDF</a> </button>
+
+                                </td>
+
+
+                                <!--Rechercher Avancée-->
+     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="id livraison " title="Type in a name">
+
+<script>
+    function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dataTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+     <!--Fin Recherche Avancée-->
+
+<br><br>
+
+
        Les livraisons disponibles
     </div>
 <div class="table-responsive">
@@ -283,19 +326,40 @@ foreach($listelivraisons as $row){
                  <td><?PHP echo $row['modePaiement']; ?></td>
                   <td><?PHP echo $row['idL']; ?></td>
 
-                <td><form method="POST" action="supprimerlivraison.php">
-	<input type="submit" name="supprimer" value="supprimer">
-	<input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-	</form>
-	</td>
-	<td><a href="modifierlivraison.php?id=<?PHP echo $row['id']; ?>">
-	Modifier</a></td>
+                  <td>
+
+<form method="POST" action="Modifierlivraison.php">
+                        <input type="submit" name="Modifier" value="Modifier">
+                        <input type="hidden" value=<?PHP echo $row['id']; ?> name="id">
+                    </form>
+                </td>
+                <td>
+                    <a href="Supprimerlivraison.php?id=<?php echo $row['id']; ?>">Supprimer</a>
+                </td>
+
+                
+                 
+
+
+          
+
+
+
+                        
+                 
+                </td>
             </tr>
-           
-        </tbody>
-        <?PHP
-    }
-    ?>
+            <?php
+                }
+            ?>
+
+
+
+
+
+
+
+
     </table>
 </div>
 </div>

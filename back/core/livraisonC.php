@@ -67,7 +67,7 @@ function afficherlivraison ($livraison){
         }	
 	}
 	function supprimerlivraison($id){
-		$sql="DELETE FROM livraison where id= $id";
+		$sql="DELETE FROM livraison where id=:id";
 		$db = config::getConnexion();
         $req=$db->prepare($sql);
 		$req->bindValue(':id',$id);
@@ -80,7 +80,7 @@ function afficherlivraison ($livraison){
         }
 	}
 	function modifierlivraison($livraison,$id){
-		$sql="UPDATE livraison SET id=:id, etatLivraison=:etatLivraison,lieuLivraison=:lieuLivraison,prixLivraison=:prixLivraison,modePaiement=:modePaiement,idL=:idL WHERE id=:id";
+		$sql="UPDATE livraison SET id=:id, etatLivraison=:etatLivraison, lieuLivraison=:lieuLivraison, prixLivraison=:prixLivraison, modePaiement=:modePaiement, idL=:idL WHERE id=:id";
 		
 		$db = config::getConnexion();
 		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
@@ -109,6 +109,38 @@ try{
         }
 		
 	}
+
+
+	function trie(){
+		$sql="SELECT * from livraison order by prixLivraison asc ";
+		$db = config::getConnexion();
+		try{
+		$liste=$db->query($sql);
+		return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());;
+		}
+	}
+	function recupererlivraisons(){
+		$sql="SELECT * from livraison";
+		$db = config::getConnexion();
+		
+		try
+		{
+		$liste=$db->query($sql);
+		$liste->execute();
+		return $liste;
+		}
+        catch (Exception $e)
+        {
+            die('Erreur: '.$e->getMessage());
+        }
+        }
+	
+	
+
+
 function recupererlivraison($id){
 		$sql="SELECT * from livraison where id=$id";
 		$db = config::getConnexion();
