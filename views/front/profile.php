@@ -1,18 +1,6 @@
 <?php
 session_start();
 ?>
-
-  <?php
-
-    if (isset($_SESSION["connectedUsername"]))
-        var_dump($_SESSION["connectedUsername"]);
-       
-    if (isset($_SESSION["connectedUsername"]))
-     echo $_SESSION["connectedUsername"]; 
-        
-   
-    ?>
-  
 <!doctype html>
 <html lang="zxx">
 
@@ -42,8 +30,9 @@ session_start();
 </head>
 
 <body>
+
     <!--::header part start::-->
-    <header class="main_menu home_menu">
+<header class="main_menu home_menu">
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
@@ -132,6 +121,7 @@ session_start();
             </div>
         </div>
     </header>
+
      <!-- header end-->
      <section class="banner_part">
         <div class="container">
@@ -145,7 +135,7 @@ session_start();
                            <?php
         echo explode(" ", $_SESSION["connectedUsername"])[0];?>
         <br>
-         <a href="product_list.html" class="btn_3">shop now</a>
+         <a href="product_list.php" class="btn_3">shop now</a>
         <?php
     }else{?>
         <div class="col-lg-7 col-md-9">
@@ -188,11 +178,11 @@ session_start();
                             <div class="col-lg-5 col-sm-6">
                                 <div class="single_product_content">
                                     <h5>Le nouveau visage du bio</h5>
-                                    <h2> <a href="single-product.html">Tous types de peau
+                                    <h2> <a href="single-product.php">Tous types de peau
 
                                         
                                      </a> </h2>
-                                    <a href="product_list.html" class="btn_3">Visitez</a>
+                                    <a href="product_list.php" class="btn_3">Visitez</a>
                                 </div>
                             </div>
                         </div>

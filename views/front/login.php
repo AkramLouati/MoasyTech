@@ -1,20 +1,12 @@
 <?php
 session_start();
 ?>
-
   <?php
+
   include 'C:\xampp\htdocs\user\controller\usercontroller.php';
-  include 'C:\xampp\htdocs\user\model\user.php';  
-    if (isset($_SESSION["connectedUsername"]))
-        var_dump($_SESSION["connectedUsername"]);
-       
-    if (isset($_SESSION["connectedUsername"]))
-     echo $_SESSION["connectedUsername"]; 
-        
-   
-    ?>
-    <?php 
- 
+  include 'C:\xampp\htdocs\user\model\user.php'; 
+  
+
  // Google reCAPTCHA API keys settings 
  $secretKey  = '6Lf0R7gfAAAAAJV2bjU3mE1iOE-Qf5bPvICYybJe'; 
   
@@ -23,14 +15,16 @@ session_start();
  // If the form is submitted 
  $postData = $statusMsg = ''; 
  $status = 'error'; 
- if(isset($_POST['submit'])){ 
+ if(isset($_POST['submit']))
+ { 
      $postData = $_POST; 
       
      // Validate form input fields 
      if(!empty($_POST['username']) && !empty($_POST['mdp'])){ 
           
          // Validate reCAPTCHA checkbox 
-         if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){ 
+         if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response']))
+         { 
   
              // Verify the reCAPTCHA API response 
              $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$_POST['g-recaptcha-response']); 
@@ -52,15 +46,19 @@ session_start();
                         $_SESSION["connectedUsername"] = $_POST['username'];
                     
                 
-                        if ($userl->rolee == "client")
-                            header('Location:  profile.php');
-                        else
-                            header('Location: ../back/template/gestion_des_clients.php');
+                        if ($userl->rolee == "client"){
+                              header('Location:  profile.php');
+                        }
+                          
+                        else{
+                             header('Location: ../back/template/gestion_des_clients.php');
+                        }
+                           
                 
                     } else {
-                        header('Location:   profile.php');
+                        header('Location:   index.php');
                     }
-                } else {
+                 } else {
                     echo "verifier les champs";
                 }
             
@@ -78,9 +76,15 @@ session_start();
          $statusMsg = 'Please fill all the mandatory fields.'; 
      } 
  } 
-  
+ if (isset($_SESSION["connectedUsername"]))
+ var_dump($_SESSION["connectedUsername"]);
+
+if (isset($_SESSION["connectedUsername"]))
+echo $_SESSION["connectedUsername"]; 
  ?>
-  
+  <?php
+
+?>
 <!doctype html>
 <html lang="zxx">
 
@@ -116,7 +120,7 @@ session_start();
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/99.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.php"> <img src="img/99.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -126,48 +130,48 @@ session_start();
                         <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                             <a class="nav-link" href="index.html">Acceuil</a>
+                             <a class="nav-link" href="index.php">Acceuil</a>
                                 </li>
                              
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_1"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Produits
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" href="product_list.html"> product list</a>
-                                        <a class="dropdown-item" href="single-product.html">product details</a>
+                                        <a class="dropdown-item" href="product_list.php"> product list</a>
+                                        <a class="dropdown-item" href="single-product.php">product details</a>
                                         
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_3"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         à propos
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
                                         
-                                        <a class="dropdown-item" href="checkout.html">product checkout</a>
-                                        <a class="dropdown-item" href="cart.html">shopping cart</a>
-                                        <a class="dropdown-item" href="confirmation.html">confirmation</a>
-                                        <a class="dropdown-item" href="elements.html">elements</a>
+                                        <a class="dropdown-item" href="checkout.php">product checkout</a>
+                                        <a class="dropdown-item" href="cart.php">shopping cart</a>
+                                        <a class="dropdown-item" href="confirmation.php">confirmation</a>
+                                        <a class="dropdown-item" href="elements.php">elements</a>
                                         <a class="dropdown-item" href="compte.php">new account</a>
                                     </div>
                                 </li>
                                 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_2"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         blog
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="blog.html"> blog</a>
-                                        <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                                        <a class="dropdown-item" href="blog.php"> blog</a>
+                                        <a class="dropdown-item" href="single-blog.php">Single blog</a>
                                     </div>
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a class="nav-link" href="contact.php">Contact</a>
                                 </li>  <?php
                                 if (isset($_SESSION["connectedUsername"])) {
                                     ?>
@@ -182,7 +186,7 @@ session_start();
                         </div>
                         <div class="hearer_icon d-flex align-items-center">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="cart.html">
+                            <a href="cart.php">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
                         </div>
@@ -257,8 +261,7 @@ session_start();
                                 
                                 <div class="col-md-12 form-group">
                                   
-                                    <button type="submit" value="submit"  name="submit" class="btn_3">
-Se connecter                                    </button>
+                                    <button type="submit" value="submit"  name="submit" class="btn_3">Se connecter                                    </button>
                                     <a class="lost_pass" href="forgetmdp.php">Mot de passe oublié?</a>
                                 </div>
                                 </li>
@@ -279,15 +282,15 @@ Se connecter                                    </button>
                     <div class="col-lg-8">
                         <div class="footer_menu">
                             <div class="footer_logo">
-                                <a href="index.html"><img src="img/99.png" alt="#"></a>
+                                <a href="index.php"><img src="img/99.png" alt="#"></a>
                             </div>
                             <div class="footer_menu_item">
-                                <a href="index.html">Home</a>
-                                <a href="about.html">About</a>
-                                <a href="product_list.html">Products</a>
+                                <a href="index.php">Home</a>
+                                <a href="about.php">About</a>
+                                <a href="product_list.php">Products</a>
                                 <a href="#">Pages</a>
-                                <a href="blog.html">Blog</a>
-                                <a href="contact.html">Contact</a>
+                                <a href="blog.php">Blog</a>
+                                <a href="contact.php">Contact</a>
                             </div>
                         </div>
                     </div>

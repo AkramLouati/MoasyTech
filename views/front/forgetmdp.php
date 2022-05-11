@@ -1,6 +1,16 @@
 <?php
+session_start();
+?>
+<?php
 include 'C:\xampp\htdocs\user\controller\usercontroller.php';
 include 'C:\xampp\htdocs\user\model\user.php'; 
+require_once("C:xampp\htdocs\user\PHPMailer-master\src\PHPMailer.php");
+require("C:xampp\htdocs\user\PHPMailer-master\src\SMTP.php");
+require("C:xampp\htdocs\user\PHPMailer-master\src\Exception.php");
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 ?>
 
 <!doctype html>
@@ -38,7 +48,7 @@ include 'C:\xampp\htdocs\user\model\user.php';
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="index.html"> <img src="img/99.png" alt="logo"> </a>
+                        <a class="navbar-brand" href="index.php"> <img src="img/99.png" alt="logo"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -48,57 +58,63 @@ include 'C:\xampp\htdocs\user\model\user.php';
                         <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                             <a class="nav-link" href="index.html">Acceuil</a>
+                             <a class="nav-link" href="index.php">Acceuil</a>
                                 </li>
                              
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_1"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Produits
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                        <a class="dropdown-item" href="product_list.html"> product list</a>
-                                        <a class="dropdown-item" href="single-product.html">product details</a>
+                                        <a class="dropdown-item" href="product_list.php"> product list</a>
+                                        <a class="dropdown-item" href="single-product.php">product details</a>
                                         
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_3"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         à propos
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
                                         
-                                        <a class="dropdown-item" href="checkout.html">product checkout</a>
-                                        <a class="dropdown-item" href="cart.html">shopping cart</a>
-                                        <a class="dropdown-item" href="confirmation.html">confirmation</a>
-                                        <a class="dropdown-item" href="elements.html">elements</a>
+                                        <a class="dropdown-item" href="checkout.php">product checkout</a>
+                                        <a class="dropdown-item" href="cart.php">shopping cart</a>
+                                        <a class="dropdown-item" href="confirmation.php">confirmation</a>
+                                        <a class="dropdown-item" href="elements.php">elements</a>
                                         <a class="dropdown-item" href="compte.php">new account</a>
                                     </div>
                                 </li>
                                 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
+                                    <a class="nav-link dropdown-toggle" href="blog.php" id="navbarDropdown_2"
                                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         blog
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                        <a class="dropdown-item" href="blog.html"> blog</a>
-                                        <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                                        <a class="dropdown-item" href="blog.php"> blog</a>
+                                        <a class="dropdown-item" href="single-blog.php">Single blog</a>
                                     </div>
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
-                                </li>
-                                <li class="nav-item">
-                             <a class="nav-link" href="login.php">login</a>
-                                </li>
+                                    <a class="nav-link" href="contact.php">Contact</a>
+                                </li>  <?php
+                                if (isset($_SESSION["connectedUsername"])) {
+                                    ?>
+                                   <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+                                <?php
+                            } else {
+                                ?>
+ <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                                <?php  } ?>
+                               
                             </ul>
                         </div>
                         <div class="hearer_icon d-flex align-items-center">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="cart.html">
+                            <a href="cart.php">
                                 <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
                         </div>
@@ -124,7 +140,7 @@ include 'C:\xampp\htdocs\user\model\user.php';
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb_iner">
-                        <h2>login</h2>
+                        <h2>reset password</h2>
                     </div>
                 </div>
             </div>
@@ -144,79 +160,24 @@ include 'C:\xampp\htdocs\user\model\user.php';
 
 
                                                                                                    </p>
-                            <a href="compte.php" class="btn_3">Créer un compte</a>
+                            <a href="login.php" class="btn_3">login</a>
                         </div>
                     </div>
                 </div>
                 
                 <form class="row contact_form" action="" method="post" >
-                               
                                 <div class="col-md-12 form-group p_star">
-                                    <input type="text" class="form-control" id="use" name="use" 
-                                        placeholder="use">
+                            
+                                    <input type="text" class="form-control" id="email" name="email" 
+                                        placeholder="email">
                                 </div>
-                                
+                            
                                 <div class="col-md-12 form-group">
                                   
-                                    <button type="submit" value="submit"  name="submit" class="btn_3">verifier </button>
-                                    <?php
-
-if (isset($_POST['submit'])) {
-    $input= trim($_POST['use']);
-    $user = new user();
-    $error='';
-    $list = $user->afficher();
-    foreach ($list as $user){
-        
-        if(strcmp( $input,$user['username'])==0){
-            $error='good';
-?>  <!-- <form class="row contact_form" action="" method="post">
-                               
-<div class="col-md-12 form-group p_star">
-    <input type="text" class="form-control"value=ade id="ade" name="ade" 
-        placeholder="adresse">
-</div>
-
-<div class="col-md-12 form-group">
-  
-    <button type="submit"  name="turn" class="btn_3">OBTENIR VOTRE MOT DE PASSE </button>
-        </div>  
-        </form>-->
-        <form action="" method="post">
-        <div class="col-md-12 form-group p_star">
-                            <label>adresse</label>
-                            <input name="ade" class="form-control"></textarea>
-                           
-                        </div>
-                        <button  value="turn" name="turn" class="btn_3">obtenir  votre mot de passe </button>
-                        </form>
-<?php
-if(isset($_POST['turn'])) {
-    $inputad= trim($_POST['ade']);
-    if(strcmp($inputad,$user['adresse'])==0)
-    {
-        $error='good';
-?><h1>votre mot de passe est :<?php echo $user['mdp'];?></h1>
-    <?php
-    }
-    else{
-        $error='bad';
-
-    }
-}
-        }
-        
-    }
-    if((strcmp('bad',$error)==0)||(strcmp('good',$error)!=0)){ 
-        ?><h1 style="color:red">erro check </h1><?php
-      }  
-}
-?>
-                                </div>
-  
-  
-                                </li>
+                                    <button type="submit" value="submit"  name="submit" class="btn_3">obtenir le code de verification                                    </button>
                                  
+                                </div>
+                                </li>
                             </form>
                               
 
@@ -228,6 +189,66 @@ if(isset($_POST['turn'])) {
             </div>
         </div>
     </section>
+    <?php
+
+if (isset($_POST['submit'])) {
+    $db = config::getConnexion();
+    $mail =new PHPMailer(true);
+    $token = uniqid();
+    $url="http://localhost/user/views/front/token.php?token=$token" ;
+   /* ini_set('sendmail_path', "\"C:\xampp\sendmail\sendmail.exe\" -t");
+    ini_set('SMTP','smtp.gmail.com');
+    ini_set('smtp_port', 2525);
+    ini_set('smtp_ssl', 'auto');
+    ini_set('auth_username','aissa.swiden@esprit.tn');
+    ini_set('auth_password','201JMT1854');*/
+    $mail1 ='med.achi94@gmail.com';
+    $subject = 'Mot de passe oublié';
+    $message = "Bonjour, voici votre lien de reinitialisation : $url";
+    $headers = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= "From: " . $mail1 . "\r\n"; // Sender's E-mail
+    $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+   // $mail->SMTPDebug = 4;
+    $mail->isSMTP(); // Paramétrer le Mailer pour utiliser SMTP 
+    $mail->CharSet="UTF-8";
+
+   // $mail->isSendmail();;
+    $mail->Host = 'smtp.gmail.com'; // Spécifier le serveur SMTP
+    $mail->SMTPAuth = true; // Activer authentication SMTP
+    $mail->SMTPOptions = array(
+        'ssl'=>array(
+            'verify_peer'=>false,
+            'verify_peer_name'=>false,
+            'allow_self_signed'=>true,
+        )
+        );
+        $mail->SMTPSecure = 'tls'; // Accepter SSL
+        $mail->Port = 2525;
+
+    $mail->Username = 'mohamed.achi@esprit.tn'; // Votre adresse email d'envoi
+    $mail->Password = '201JMT1852'; // Le mot de passe de cette adresse email
+    $mail->addAddress($_POST['email']); 
+    
+  
+    
+   
+$mail->Subject ='Mot de passe oublié';
+$mail->Body ="Bonjour, voici votre lien de reinitialisation : $url";
+$mail->isHTML(true);
+
+$mail->smtpConnect();
+//mail($_POST['mail'], $subject, $message, $headers )
+    if ($mail->Send()) {
+        $stmt = $db->prepare("UPDATE utilisateur SET token = ? WHERE email = ?");
+        $stmt->execute([$token, $_POST['email']]);
+        echo "E-mail envoyé";
+    } else {
+        echo "Une erreur est survenue";
+    }
+}
+?>
+
     <!--================login_part end =================-->
 
     <!--::footer_part start::-->
