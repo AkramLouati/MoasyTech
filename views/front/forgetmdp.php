@@ -2,11 +2,11 @@
 session_start();
 ?>
 <?php
-include 'C:\xampp\htdocs\user\controller\usercontroller.php';
-include 'C:\xampp\htdocs\user\model\user.php'; 
-require_once("C:xampp\htdocs\user\PHPMailer-master\src\PHPMailer.php");
-require("C:xampp\htdocs\user\PHPMailer-master\src\SMTP.php");
-require("C:xampp\htdocs\user\PHPMailer-master\src\Exception.php");
+include '../../controller/usercontroller.php';
+include '../../model/user.php'; 
+require_once("C:xampp\htdocs\user\PHPMailer-master\PHPMailer-master\src\PHPMailer.php");
+require("C:xampp\htdocs\user\PHPMailer-master\PHPMailer-master\src\SMTP.php");
+require("C:xampp\htdocs\user\PHPMailer-master\PHPMailer-master\src\Exception.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -122,15 +122,7 @@ use PHPMailer\PHPMailer\Exception;
                 </div>
             </div>
         </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container ">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
+        
     </header>
     <!-- Header part end-->
 
@@ -191,7 +183,7 @@ use PHPMailer\PHPMailer\Exception;
     </section>
     <?php
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['email'])) {
     $db = config::getConnexion();
     $mail =new PHPMailer(true);
     $token = uniqid();
@@ -206,7 +198,7 @@ if (isset($_POST['submit'])) {
     $subject = 'Mot de passe oublié';
     $message = "Bonjour, voici votre lien de reinitialisation : $url";
     $headers = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= "From: " . $mail1 . "\r\n"; // Sender's E-mail
+    $headers .= "From:" . $mail1 . "\r\n"; // Sender's E-mail
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
    // $mail->SMTPDebug = 4;
@@ -215,6 +207,7 @@ if (isset($_POST['submit'])) {
 
    // $mail->isSendmail();;
     $mail->Host = 'smtp.gmail.com'; // Spécifier le serveur SMTP
+    $mail->SMTPDebug = 2;
     $mail->SMTPAuth = true; // Activer authentication SMTP
     $mail->SMTPOptions = array(
         'ssl'=>array(
@@ -224,7 +217,7 @@ if (isset($_POST['submit'])) {
         )
         );
         $mail->SMTPSecure = 'tls'; // Accepter SSL
-        $mail->Port = 2525;
+        $mail->Port = 587;
 
     $mail->Username = 'mohamed.achi@esprit.tn'; // Votre adresse email d'envoi
     $mail->Password = '201JMT1852'; // Le mot de passe de cette adresse email

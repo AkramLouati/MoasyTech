@@ -132,10 +132,11 @@ session_start();
                          <?php if(isset($_SESSION["connectedUsername"])){ ?>
                           
                             <h1 id="index-text">Welcome, 
+                            <br>  
                            <?php
         echo explode(" ", $_SESSION["connectedUsername"])[0];?>
         <br>
-         <a href="product_list.php" class="btn_3">shop now</a>
+         <a href="blog.php" class="btn_3">actualité</a>
         <?php
     }else{?>
         <div class="col-lg-7 col-md-9">
