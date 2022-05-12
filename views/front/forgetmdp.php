@@ -207,7 +207,6 @@ if (isset($_POST['email'])) {
 
    // $mail->isSendmail();;
     $mail->Host = 'smtp.gmail.com'; // Spécifier le serveur SMTP
-    $mail->SMTPDebug = 2;
     $mail->SMTPAuth = true; // Activer authentication SMTP
     $mail->SMTPOptions = array(
         'ssl'=>array(
