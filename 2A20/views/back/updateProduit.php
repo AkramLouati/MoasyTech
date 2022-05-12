@@ -1,49 +1,25 @@
-<?php
-	  include_once "../../controller/produitC.php";
- 
-      
-	
-	$error = "";
+<?PHP
+                                                  ob_start();
+                                                  include_once '../../Controller/produitC.php';
 
-    $produitC = new produitC(); 
-    $produit1C = new produitC();
-	$listeCategorie= $produit1C->listeCategorie();
-    $produit2C = new produitC();
+                                                  include_once '../../Modul/produit.php';
 
-	
-	if (
-        isset($_POST['libelle']) 
-        && isset($_POST['nb_calories']) 
-        && isset($_POST['prix']) 
-        && isset($_POST['description'])
-         && isset($_POST['categorie'])
-         && isset($_POST['img'])
-	){
-		if (
-            !empty($_POST['libelle']) &&
-            !empty($_POST['nb_calories']) &&
-            !empty($_POST['prix']) &&
-            !empty($_POST['description']) &&
-            !empty($_POST['categorie']) &&
-            !empty($_POST['img'])
-        ) {
-            $produit = new produit(
-                $_POST['libelle'],
-                $_POST['nb_calories'], 
-                $_POST['prix'],
-                $_POST['description'],
-                $_POST['categorie'],
-                $_POST['img']
-            );
-			
-            $produitC->modifierProduit($produit, $_GET['id']);
-            header('Location:afficherproduit.php');
-        }
-        else
-            $error = "Missing information";
-	}
+                                                  if (isset($_GET['id'])) {
+                                                    $produitController = new produitC();
+                                                    $result = $produitController->recupererProduit($_GET['id']);
+                                                    
+                                                    foreach ($result as $row) {
+                                                      $id = $row['id'];
+                                                      $libelle = $row['libelle'];
+                                                      $nb_calories = $row['nb_calories'];
+                                                      $prix = $row['prix'];
+                                                      $description = $row['description'];
+                                                      $categorie = $row['categorie'];   
+                                                      $img = $row['img']; 
+                                                      ?>
 
-?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -93,6 +69,13 @@
             <li class="nav-item">
             <a class="nav-link" href="afficherproduit.php">
               <i class="mdi mdi-shopping
+ menu-icon"></i>
+ <span class="menu-title">Gestion des categorie</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gestion des commandes.html">
+              <i class="mdi mdi-tag-outline
  menu-icon"></i>
               <span class="menu-title">Gestion des produits</span>
             </a>
@@ -304,40 +287,53 @@
                           </tr>
                         </thead>
                         <tbody>
-                        <form action="" method="POST">
+                        <form method="POST" action="updateProduit.php?id=<?PHP echo $row['id']; ?> ">
                                 <div>
                                     <label for="libelle">Nom du produit:
                                     </label>
-                                    <input type="text" name="libelle" id="libelle" maxlength="20">
+                                    <input type="text" name="libelle" id="libelle" maxlength="20" value="<?PHP echo $libelle ?>">
                                 </div>
                                 <div>
-                                    <label for="nb_calories">Nombre de calories:
+                                    <label for="nb_colis">Nombre de colis:
                                     </label>
-                                    <input type="text" name="nb_calories" id="nb_calories">
+                                    <input type="text" name="nb_calories" id="nb_colis" value="<?PHP echo $nb_calories ?>">
                                 </div>
                                 <div>
                                     <label for="prix">Prix:
                                     </label>
-                                    <input type="text" name="prix" id="prix">
+                                    <input type="text" name="prix" id="prix" value="<?PHP echo $prix ?>">
                                 </div>
                                 <div>
                                     <label for="description">Description:
                                     </label>
-                                    <input type="text" name="description" id="description">
+                                    <input type="text" name="description" id="description" value="<?PHP echo $description ?>">
                                 </div>
                                 <div>
                                     <label for="categorie">Categorie:
                                     </label>
-                                    <input type="text" name="categorie" id="categorie">
+                                    <input type="text" name="categorie" id="categorie" value="<?PHP echo $categorie  ?>">
                                 </div>
                                 <div>
                                     <label for="img">image:
                                     </label>
-                                    <input type="file" name="img" id="img">
+                                    <input type="file" name="img" id="img" value="<?PHP echo $img ?>">
                                 </div>
-                                <input type="submit" class="btn" value="Envoyer">
+                                <input type="submit" class="btn" value="modifier" name="modifier">
                                 <input type="reset" class="btn" value="Annuler">
-                            </form>
+                                </form><?PHP }
+                                                  }
+
+                                                  if (isset($_POST['modifier'])) {
+                                                    $produit = new produit($_POST['libelle'], $_POST['nb_calories'], $_POST['prix'], $_POST['description'], $_POST['categorie'], $_POST['img']);
+                                                    $produitController->modifierProduit($produit, $_GET['id']);
+                                                    
+                                                    header('Location: afficherproduit.php');
+                                                    
+
+                                                  }
+                                                  ob_end_flush(); 
+                                                   ?>
+                            <button class="btn"><a href="affichercategorie.php">Retour à la liste des catégories</a></button>
                         </tbody>
                       </table>
                     </div>
@@ -369,6 +365,17 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script>
+        $(function() {
+            $('#expire_date').datepicker();
+        });
+    </script>
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>

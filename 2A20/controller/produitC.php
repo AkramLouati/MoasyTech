@@ -1,6 +1,6 @@
 <?php
 require_once "../../config.php";
-include "../../modul/produit.php"; 
+include "../../Modul/produit.php"; 
 
  class produitC{
 
@@ -28,18 +28,22 @@ include "../../modul/produit.php";
       }
     }
 
-    function listeFournisseur()
-    {
-      $sql = " SELECT fournisseur FROM produit";
-      $db = config::getConnexion();
-      try {
-        $liste= $db->query($sql);
-        return $liste;
-      } catch(Exception $e) {
-          die('Erreur: ' .$e->getMessage());
-      }
-    }
-    
+    function tri()
+         {
+        
+            $sql="SELECT * from produit ORDER BY prix  DESC";
+        
+            $db = config::getConnexion();
+            try
+           {
+                $list=$db->query($sql);
+               return $list;
+            }
+             catch (Exception $e)
+            {
+               die('Erreur: '.$e->getMessage());
+            }
+		}
 	
     function ajoutProduit($produit)
     {
@@ -75,46 +79,110 @@ include "../../modul/produit.php";
 				die('Erreur: '.$e->getMessage());
 			}
 		}
-    function modifierProduit($produit, $id){
+		function modifierProduit($produit, $id){
 			try {
+
+				$query=null;
 				$db = config::getConnexion();
-				$query = $db->prepare(
-					'UPDATE produit SET 
-						libelle = :libelle, 
-						nb_calories = :nb_calories,
-						prix = :prix,
-						description = :description,
-						categorie = :categorie,
-						img = :img
-					WHERE id = :id'
-				);
-				$query->execute([
-					'libelle' => $produit->getLibelle(),
-					'nb_calories' => $produit->getNb_calories(),
-					'prix' => $produit->getprix(),
-						 'description' => $produit->getDescription(),
-					'categorie' => $produit->getCategorie(),
-				    'id' => $id  , 
-					'img' => $produit->getImg()
-					 ]);
+
+
+				if($produit->getImg()==null)
+				{
+					$query = $db->prepare(
+						'UPDATE produit SET 
+							libelle = :libelle, 
+							nb_calories = :nb_calories,
+							prix = :prix,
+							description = :description,
+							categorie = :categorie
+							
+						WHERE id = :id'
+					);
+
+					$query->execute([
+						'libelle' => $produit->getLibelle(),
+						'nb_calories' => $produit->getNb_calories(),
+						'prix' => $produit->getprix(),
+							 'description' => $produit->getDescription(),
+						'categorie' => $produit->getCategorie(),
+						'id' => $id  
+						
+						 ]);
+
+				}
+				else {
+
+
+					$query = $db->prepare(
+						'UPDATE produit SET 
+							libelle = :libelle, 
+							nb_calories = :nb_calories,
+							prix = :prix,
+							description = :description,
+							categorie = :categorie,
+							img = :img
+						WHERE id = :id'
+					);
+					$query->execute([
+						'libelle' => $produit->getLibelle(),
+						'nb_calories' => $produit->getNb_calories(),
+						'prix' => $produit->getprix(),
+							 'description' => $produit->getDescription(),
+						'categorie' => $produit->getCategorie(),
+						'id' => $id  , 
+						'img' => $produit->getImg()
+						 ]);
+
+				}
+				
+				
+				
 
 				echo $query->rowCount() . " records UPDATED successfully <br>";
+
 			} catch (PDOException $e) {
 				$e->getMessage();
 			}
 		}
-		function recupererProduit($id){
-			$sql="SELECT * from produit where	id=$id";
-			$db = config::getConnexion();
-			try{
-				$query=$db->prepare($sql);
-				$query->execute();
+		
 
-				$produit=$query->fetch();
-				return $produit;
+		function recupererProduit($id)
+		{
+			$sql = "SELECT * from  produit where id=$id";
+			$db = config::getConnexion();
+			try {
+				$liste = $db->query($sql);
+				return $liste;
+			} catch (Exception $e) {
+				die('Erreur: ' . $e->getMessage());
 			}
-			catch (Exception $e){
-				die('Erreur: '.$e->getMessage());
+		}
+		function getProduct($id){
+            $sql="SELECT * from produit where id= $id";
+            $db = config::getConnexion();
+            try{
+                $query=$db->prepare($sql);
+                $query->execute();
+    
+                $produit=$query->fetch();
+                return $produit;
+            } 
+            catch (Exception $e){
+                die('error: '.$e->getMessage());
+            }
+        }
+		function afficherresid($id){
+			$sql="SELECT * FROM produit where id=:id";
+			$db = config::getConnexion();
+			$req=$db->prepare($sql);
+			$req->bindValue(':id', $id);
+			try{
+				$req->execute();
+				//$liste = $db->query($sql);
+				return $req;//$liste;
+			}
+			catch(Exception $e){
+				die('Erreur:'. $e->getMeesage());
 			}
 		}
 
@@ -149,5 +217,3 @@ include "../../modul/produit.php";
 
 	 
 	}
-
-  

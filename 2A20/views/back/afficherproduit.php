@@ -2,6 +2,7 @@
 include '../../controller/produitC.php';
 $ProduitC = new produitC();
 $listep = $ProduitC->afficherproduit();
+$con = mysqli_connect("localhost","root","","integrationfinale");
 ?>
 
 
@@ -19,6 +20,35 @@ $listep = $ProduitC->afficherproduit();
     <link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['libelle', 'nb_calories'],
+         <?php
+         $sql = "SELECT * FROM produit";
+         $fire = mysqli_query($con,$sql);
+          while ($result = mysqli_fetch_assoc($fire)) {
+            echo"['".$result['libelle']."',".$result['nb_calories']."],";
+          }
+
+         ?>
+        ]);
+
+        var options = {
+          title: 'PRODUIT and their NOMBRE'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
   </head>
   <body>
     <div class="container-scroller">
@@ -51,6 +81,13 @@ $listep = $ProduitC->afficherproduit();
               <span class="menu-title">Gestion des clients</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="affichercategorie.php">
+              <i class="mdi mdi-shopping
+ menu-icon"></i>
+              <span class="menu-title">Gestion des categorie</span>
+            </a>
+          </li>
             <li class="nav-item">
             <a class="nav-link" href="afficherproduit.php">
               <i class="mdi mdi-shopping
@@ -67,7 +104,8 @@ $listep = $ProduitC->afficherproduit();
           </li>
           <li class="nav-item">
             <a class="nav-link" href="gestion des livraisons.html">
-              <i class="mdi mdi-truck-delivery menu-icon"></i>
+              <i class="mdi mdi-truck-delivery
+ menu-icon"></i>
               <span class="menu-title">Gestion des livraisons</span>
             </a>
           </li>
@@ -238,13 +276,29 @@ $listep = $ProduitC->afficherproduit();
             <div class="page-header flex-wrap">
               <h3 class="mb-0"> Gestion des produits <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block"></span>
               </h3>
-              <div class="d-flex">
-                <button type="button" class="btn btn-sm bg-white btn-icon-text border">
-                  <i class="mdi mdi-email btn-icon-prepend"></i> Email </button>
-                <button type="button" class="btn btn-sm bg-white btn-icon-text border ml-3">
-                  <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
-                <button type="button" class="btn btn-sm ml-3 btn-success"> Add User </button>
-              </div>
+             
+                            <div class="col-md-4 col-sm-12 text-right">
+                                <a href="addproduit.php" class="btn btn-small btn-primary">Add New product</a>
+                            </div>
+                           
+                            <div class="checkout_btn_inner float-right">
+                        <a class="btn_1 checkout_btn_1" target="_blank" rel="noopener noreferrer" href="pdfPR.php">PDF</a>
+                    </div>
+                            <div class="col-md-4 col-sm-12 text-right">
+                                <a href="stat.php" class="btn btn-small btn-primary">statistc</a>
+                            </div>
+                           
+                            <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                    <div class="bg-white tm-block h-100">
+                        
+                        <table class="table table-hover table-striped mt-3">
+                           
+                        </table>
+
+                        
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="content-wrapper">
            
@@ -254,17 +308,21 @@ $listep = $ProduitC->afficherproduit();
                 <div class="card">
                   <div class="card-body">
                     <div class="table-responsive">
+                        <div id="piechart" style="width: 300px; height: 300px;"></div>
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>Nom de Produit</th>
-                            <th>Prix de Produit</th>
-                            <th>Quantité</th>
-                            <th>Catégorie</th>
+                            <th>ID de Produit</th>
+                            <th>image de produit</th>
+                            <th>Nom de produit</th>
+                            <th>Description</th>
                             <th>Description</th>
                           </tr>
                         </thead>
                         <tbody>
+                        
+                        
+                        
                           <tr>
                           <?php
                                         foreach ($listep as $produit) {
@@ -288,7 +346,7 @@ $listep = $ProduitC->afficherproduit();
                 </div>
               </div>
               <div class="col-lg-12 grid-margin stretch-card">
-               
+               <div id="piechart" ></div>
               </div>
               <div class="col-lg-12 grid-margin stretch-card">
             
@@ -301,6 +359,7 @@ $listep = $ProduitC->afficherproduit();
           
        
           </div>
+        
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
               <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
@@ -334,5 +393,16 @@ $listep = $ProduitC->afficherproduit();
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script>
+        $(function() {
+            $('.tm-product-name').on('click', function() {
+                window.location.href = "edit-product.html";
+            });
+        })
+    </script>
   </body>
 </html>

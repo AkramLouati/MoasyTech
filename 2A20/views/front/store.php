@@ -11,7 +11,41 @@ $listeCategorie = $categorieC->afficherCategorie();
 $categorieC = new categorieC();
 // $localC = new localC();
 // $listeLocal = $localC->afficherLocal();
+if (isset($_POST['search']))
+    {
+        $listeProduit=$produitC->afficherresid($_POST['search']); 
+
+    }
+    //code pagination
+
+$con = mysqli_connect('localhost','root','','integrationfinale');
+if(!$con)
+{
+    echo ' Please Check Your Connection ';
+}
+
+if(isset($_GET['page']))
+{
+    $page = $_GET['page'];
+}
+else
+{
+    $page = 1;
+}
+
+$num_per_page = 03;
+$start_from = ($page-1)*02;
+
+$query = "select * from produit limit $start_from,$num_per_page";
+$result = mysqli_query($con,$query);
+
+
+
+
+
 ?>
+?>
+
 
 <!doctype html>
 <html lang="zxx">
@@ -150,57 +184,130 @@ $categorieC = new categorieC();
                 <div class="col-md-4">
                     <div class="product_sidebar">
                         <div class="single_sedebar">
-                            <form action="#">
-                                <input type="text" name="#" placeholder="Search keyword">
+                            
+                            <form action="#" class="input-group mb-3">
+                                <input type="text" name="search" placeholder="Search keyword" id="searchbar"  placeholder="Search data" autocomplete="off">
                                 <i class="ti-search"></i>
+                                
                             </form>
                         </div>
+                        <div class="py-3">
+					<h5 class="font-weight-bold">Categories</h5>
+					<ul class="list-group">
+					 	<?php foreach ($listeCategorie as $categorieC) : ?>
+							<li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center category"> <?php echo $categorieC['nomCategorie']; ?>
+								<span class="badge badge-primary badge-pill">328</span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
                         <div class="single_sedebar">
                             <div class="select_option">
-                                <div class="select_option_list">Category <i class="right fas fa-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-                                    <p><a href="#">Category 1</a></p>
-                                    <p><a href="#">Category 2</a></p>
-                                    <p><a href="#">Category 3</a></p>
-                                    <p><a href="#">Category 4</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_sedebar">
-                            <div class="select_option">
-                                <div class="select_option_list">Type <i class="right fas fa-caret-down"></i> </div>
-                                <div class="select_option_dropdown">
-                                    <p><a href="#">Type 1</a></p>
-                                    <p><a href="#">Type 2</a></p>
-                                    <p><a href="#">Type 3</a></p>
-                                    <p><a href="#">Type 4</a></p>
+                                <div class="select_option_list"  id="sort">Trier <i class="right fas fa-caret-down"></i> </div>
+                                <div class="select_option_dropdown" id="sort">
+                                      <option selected="selected">Prix décroissant</option>
+                        <option>Prix croissant</option>
+                        <option>Titre A->Z</option>
+                        <option>Titre Z->A</option>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="py-3">
+					<h5 class="font-weight-bold">Rating</h5>
+					<form class="rating">
+						<div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+						<div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+						<div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+						<div class="form-inline d-flex align-items-center py-2"> <label class="tick"><span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+						<div class="form-inline d-flex align-items-center py-2"> <label class="tick"> <span class="fas fa-star"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <span class="far fa-star px-1 text-muted"></span> <input type="checkbox"> <span class="check"></span> </label> </div>
+					</form>
+				     </div>
+                     	
                 </div>
-                <div class="col-md-8">
-                    <div class="product_list">
-                        <div class="row">
-                        <?php foreach ($listeProduit as $produit) : ?>
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="single_product_item">
-                                    <img src="img/product/<?php echo $produit['img'] ?>" alt="#" class="img-fluid">
-                                    <h3> <a href="single-product.html"><?php echo $produit['libelle'] ?></a> </h3>
-                                    <p><?php echo $produit['prix'] ?></p>
-                                </div>
-                            </div>
-                            <?php endforeach; ?>
-                            
-                        </div>
-                        <div class="load_more_btn text-center">
-                            <a href="#" class="btn_3">Load More</a>
-                        </div>
-                    </div>
-                </div>
+                
+                <section id="products">
+				<div class="container py-3">
+					<div class="row"> 
+
+
+
+
+
+					
+                    
+					<?php
+					  $con2 = mysqli_connect("localhost","root","","gestionoffre");
+
+					 
+											
+
+					 while($produit=mysqli_fetch_assoc($result))  {
+						 
+						
+                    
+                        ?>
+						 
+						 
+                   
+						<div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 product " id="products-container" >
+						
+							<div class="card"><a href="productDt.phpp?<?php echo $produit['id'] ?>"data_role="popup" id="img" data-toggle="popover"  data-content="Some content inside the popover" data-position="window" >
+                                    <img src="img/product/<?php echo $produit['img'] ?>" alt="#" class="img_thumbnail" width="200" >
+
+									   </a>
+									   <div class="card-body ">
+								
+									<h6 class="font-weight-bold pt-1 product-title"  ><?php echo $produit['libelle'] ?></h6>
+									<div class="container">
+                                    <a href="productDT.php?id=<?php echo $produit['id'] ?>"data_role="popup" id="img" data-toggle="popover" title="<?php echo $produit['description'] ?>" data-content="Some content inside the popover" data-position="window" >
+									
+									more   </a></div>
+                                    <div class="d-flex align-items-center product-id"> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span class="far fa-star"></span> </div>
+									<div class="d-flex align-items-center justify-content-between pt-3">
+										<div class="d-flex flex-column">
+										<div class="product-category"><?php $produit['categorie'] ?></div>
+											<div class="h6 font-weight-bold product-price "><?php echo $produit['prix'] ?></div>
+										</div>
+										<div class="btn btn-primary" style="background-color: #2A2A2A">Buy now</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+						<?php
+					 }
+                                        
+                                            ?>
+    </section>
             </div>
         </div>
-    </section>
+        <?php 
+        
+		$pr_query = "select * from produit ";
+		$pr_result = mysqli_query($con,$pr_query);
+		$total_record = mysqli_num_rows($pr_result );
+		
+		$total_page = ceil($total_record/$num_per_page);
+
+		if($page>1)
+		{
+			echo "<a href='store.php?page=".($page-1)."' class='btn btn-danger'  >Previous</a>";
+		}
+
+		
+		for($i=1;$i<$total_page;$i++)
+		{
+			echo "<a href='store.php?page=".$i."' class='btn btn-primary'  >$i</a>";
+		}
+
+		if($i>$page)
+		{
+			echo "<a href='store.php?page=".($page+1)."' class='btn btn-danger'>Next</a>";
+		}
+
+?>
+
     <!-- product list part end-->
     
     <!-- client review part here -->
@@ -381,6 +488,81 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/mail-script.js"></script>
     <!-- custom js -->
     <script src="js/custom.js"></script>
+    <script>
+
+$('#searchbar').keyup(function () {
+    let products = $('.product'); 
+    let keyword = $(this).val().toLowerCase(); 
+    if (keyword == "") 
+        products.show();
+    else { 
+        products.each(function () {
+            let title = $(this).find('.product-title').text().toLowerCase();
+            let id = $(this).find('.product-id').text().toLowerCase();
+
+            (title.indexOf(keyword) >= 0 ) ? $(this).show() : $(this).hide();
+        });
+    }
+});
+
+//tri
+$(document).ready(function() {
+            var mylist = $('#products-container');
+
+            var listitems = mylist.children('div').get();
+
+            listitems.sort(function(a, b) {
+                let price_a = $(a).find('.product-price').text();
+                let price_b = $(b).find('.product-price').text();
+                return parseInt(price_a) - parseInt(price_b);
+            });
+
+            // console.log(listitems);
+            listitems.forEach(element => {
+                mylist.append(element);
+            });
+        });
+
+
+        $('#sort').change(function() {
+            let products_content = $('#products-container');
+            let products = $('.product');
+            let sort = $(this).val();
+
+            if (sort == "Prix décroissant") {
+                products.sort(function(a, b) {
+                    let price_a = $(a).find('.product-price').text();
+                    let price_b = $(b).find('.product-price').text();
+                    return parseInt(price_b) - parseInt(price_a);
+                })
+                products.appendTo(products_content);
+            } else if (sort == "Prix croissant") {
+                products.sort(function(a, b) {
+                    let price_a = $(a).find('.product-price').text();
+                    let price_b = $(b).find('.product-price').text();
+                    return parseInt(price_a) - parseInt(price_b);
+                })
+                products.appendTo(products_content);
+
+            } else if (sort == "Titre A->Z") {
+                products.sort(function(a, b) {
+                    let title_a = $(a).find('.product-title').text();
+                    let title_b = $(b).find('.product-title').text();
+                    return title_a.localeCompare(title_b);
+                })
+                products.appendTo(products_content);
+            } else if (sort == "Titre Z->A") {
+                products.sort(function(a, b) {
+                    let title_a = $(a).find('.product-title').text();
+                    let title_b = $(b).find('.product-title').text();
+                    return title_b.localeCompare(title_a);
+                })
+                products.appendTo(products_content);
+            }
+
+        });
+
+</script>
 </body>
 
 </html>

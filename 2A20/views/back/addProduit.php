@@ -1,8 +1,10 @@
 <?php
-
+include '../../controller/categorie_c.php';
 include_once '../../controller/produitC.php';
 include_once '../../modul/produit.php';
-
+include_once '../../modul/categorie.php';
+$categorieC = new categorieC();
+$listec = $categorieC->afficherCategorie();
 $error = "";
 
 $produit = null;
@@ -78,14 +80,21 @@ if (
             </a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="afficherproduit.php">
+            <a class="nav-link" href="affichercategorie.php">
               <i class="mdi mdi-shopping
+ menu-icon"></i>
+ <span class="menu-title">Gestion de categorie</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="afficherproduit.php">
+              <i class="mdi mdi-tag-outline
  menu-icon"></i>
               <span class="menu-title">Gestion des produits</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="gestion des commandes.html">
+            <a class="nav-link" href="afficherproduit.php">
               <i class="mdi mdi-tag-outline
  menu-icon"></i>
               <span class="menu-title">Gestion des commandes</span>
@@ -281,6 +290,7 @@ if (
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-striped">
+                     
                         <thead>
                           <tr>
                             <th>Nom de Produit</th>
@@ -291,32 +301,52 @@ if (
                           </tr>
                         </thead>
                         <tbody> 
-                            <form action="" method="POST">
+                     
+                        <form action="" method="POST" name="ajouterProduitForm" onsubmit="return ajouterProduit()">
                                 <div>
-                                    <label for="libelle">Nom du produit:
+                                    <label for="libelle" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Nom de produit:
                                     </label>
                                     <input type="text" name="libelle" id="libelle" maxlength="20">
                                 </div>
                                 <div>
-                                    <label for="nb_calories">Nombre de calories:
+                                    <label for="nb_calories" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Nombre de colie:
                                     </label>
                                     <input type="text" name="nb_calories" id="nb_calories">
                                 </div>
                                 <div>
-                                    <label for="prix">Prix:
+                                    <label for="prix" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Prix:
                                     </label>
                                     <input type="text" name="prix" id="prix">
                                 </div>
                                 <div>
-                                    <label for="description">Description:
+                                    <label for="description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Description:
                                     </label>
                                     <input type="text" name="description" id="description">
                                 </div>
-                                <div>
-                                    <label for="categorie">Categorie:
+                               
+                                
+                                <div class="input-group mb-3">
+                                
+                                
+                                    
+                                    <label for="categorie" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Categorie:
                                     </label>
-                                    <input type="text" name="categorie" id="categorie">
+                                    
+                                    
+                                    <div class="input-group mb-3">
+                                    <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" name="categorie" id="category">
+                                    <option selected>Select one</option>
+                                    <?php
+                                        foreach ($listec as $categorie) {
+                                        ?>                                           
+                                    <option value="1"><?php echo $categorie['nomCategorie']; ?> <?php } ?></option>
+                                        
+                                    </select>
+                                    
+                                    </div>
+                              
                                 </div>
+                                
                                 <div>
                                     <label for="img">image:
                                     </label>
@@ -356,27 +386,25 @@ if (
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <!-- https://jqueryui.com/download/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+     <!-- Plugin js for this page -->
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.resize.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.categories.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.fillbetween.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.stack.js"></script>
-    <script src="assets/vendors/flot/jquery.flot.pie.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
+   
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
+    
     <!-- End custom js for this page -->
+    <script>
+        $(function() {
+            $('#expire_date').datepicker();
+        });
+    </script>
+    	<script src="addProduct.js"></script>
   </body>
 </html>
