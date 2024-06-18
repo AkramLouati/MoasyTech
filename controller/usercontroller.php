@@ -10,7 +10,6 @@ class user{
            $db=config::getConnexion();
         
           $query=$db->prepare ($sql);
-        
             
            
                  
